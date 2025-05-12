@@ -61,5 +61,5 @@ Um aplicativo de gerenciamento de tarefas completo implementando o padrão MVC (
 ---
 
 <div align="center">
-Feito com ❤️ por <a href="https://github.com/almeida-cma">Seu Nome</a>
+Feito com ❤️ por <a href="https://github.com/almeida-cma">Almeida C.</a>
 </div>
