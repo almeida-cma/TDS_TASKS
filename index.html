@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciador de Tarefas MVC</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./src/css/style.css">
+    <style>
+        .alert {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            border-radius: 5px;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+        }
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border-left: 4px solid #28a745;
+        }
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border-left: 4px solid #dc3545;
+        }
+        .close-alert {
+            margin-left: 15px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="app-header">
+            <h1><i class="fas fa-tasks"></i> Gerenciador de Tarefas</h1>
+            <p class="subtitle">Padrão MVC com LocalStorage</p>
+        </header>
+
+        <div class="app-actions">
+            <button id="add-task-btn" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Nova Tarefa
+            </button>
+            <div class="filter-container">
+                <select id="filter-tasks" class="form-control">
+                    <option value="all">Todas as tarefas</option>
+                    <option value="pending">Pendentes</option>
+                    <option value="completed">Concluídas</option>
+                </select>
+            </div>
+            <div class="backup-actions">
+                <button id="export-btn" class="btn btn-secondary">
+                    <i class="fas fa-file-export"></i> Exportar
+                </button>
+                <button id="import-btn" class="btn btn-secondary">
+                    <i class="fas fa-file-import"></i> Importar
+                </button>
+                <input type="file" id="import-file" accept=".json" style="display: none;">
+                <button id="generate-pdf-btn" class="btn btn-secondary">
+                    <i class="fas fa-file-pdf"></i> Gerar PDF
+                </button>
+            </div>
+        </div>
+
+        <div class="task-list-container" id="pdf-export-container">
+            <div id="task-list" class="task-list"></div>
+            <div id="empty-state" class="empty-state">
+                <i class="fas fa-clipboard-list"></i>
+                <h3>Nenhuma tarefa encontrada</h3>
+                <p>Adicione uma nova tarefa clicando no botão acima</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Tarefa -->
+    <div id="task-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 id="modal-title">Adicionar Tarefa</h2>
+            <form id="task-form">
+                <input type="hidden" id="task-id">
+                <div class="form-group">
+                    <label for="task-title">Título *</label>
+                    <input type="text" id="task-title" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="task-description">Descrição</label>
+                    <textarea id="task-description" class="form-control" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="task-due-date">Data de Vencimento</label>
+                    <input type="date" id="task-due-date" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="task-status">Status</label>
+                    <select id="task-status" class="form-control">
+                        <option value="pending">Pendente</option>
+                        <option value="completed">Concluída</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancel-task">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmação -->
+    <div id="confirm-modal" class="modal">
+        <div class="modal-content small">
+            <h2>Confirmar Exclusão</h2>
+            <p>Tem certeza que deseja excluir esta tarefa?</p>
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" id="cancel-delete">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="confirm-delete">Excluir</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="./src/utils/pdfGenerator.js"></script>
+    <script src="./src/js/model/TaskModel.js"></script>
+    <script src="./src/js/view/TaskView.js"></script>
+    <script src="./src/js/controller/TaskController.js"></script>
+    <script src="./src/js/app.js"></script>
+</body>
+</html>
